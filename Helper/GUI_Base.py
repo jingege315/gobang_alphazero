@@ -1,4 +1,4 @@
-class GUIHelper(object):
+class GUI_Base(object):
 	"""
 	GUI五子棋绘制类
 	"""
@@ -22,10 +22,10 @@ class GUIHelper(object):
 	@staticmethod
 	def _draw_chess(x1, y1, x2, y2, rows, columns, x, y, black, draw_chess_fun):
 		"""
-		横向是x，纵向是y，左上角是起点
+		绘制棋子，横向是x，纵向是y，左上角是起点
 		:param x: 落子的x坐标，范围0~rows-1
 		:param y: 落子的y坐标，范围0~columns-1
-		:param draw_chess: 传入参数（x,y,black）
+		:param draw_chess_fun: 传入参数（x,y,black）
 		"""
 		assert 0 <= x <= rows - 1 and 0 <= y <= columns - 1
 		x = x1 + x * (x2 - x1) / (rows - 1)
@@ -53,6 +53,13 @@ class GUIHelper(object):
 	def draw_chess(self, x, y, black):
 		self._draw_chess(self.x1, self.y1, self.x2, self.y2, self.rows, self.columns, x, y, black, self.draw_chess_fun)
 
+	def draw_chesses(self,ls):
+		"""
+		绘制所有棋子
+		"""
+		for one in ls:
+			self.draw_chess(*one)
+
 	def get_coordinate(self, x, y, theta):
 		return self._get_coordinate(self.x1, self.y1, self.x2, self.y2, self.rows, self.columns, x, y, theta)
 
@@ -63,4 +70,8 @@ class GUIHelper(object):
 		self.draw_chess(x, y, False)
 
 	def clear(self):
+		"""
+		清空棋盘
+		"""
 		self.clear_fun()
+		self.draw_board()

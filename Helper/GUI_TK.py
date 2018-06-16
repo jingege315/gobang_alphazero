@@ -1,9 +1,9 @@
-from Helper.GUIHelper import GUIHelper
+from GUI_Base import GUI_Base
 
 
-class GUIHelper2(GUIHelper):
+class GUI_TK(GUI_Base):
 	"""
-	GUI五子棋绘制类，特化
+	GUI五子棋绘制类，使用tkinter库渲染的特化类
 	"""
 
 	def __init__(self, cv, x1, y1, x2, y2, callback_click, chess_radii=10, rows=15, columns=15, theta=0.3):
@@ -33,7 +33,7 @@ class GUIHelper2(GUIHelper):
 		def clear_fun():
 			cv.delete('all')
 
-		def paint(event):
+		def _callback_click(event):
 			x, y = event.x, event.y
 			# print('x=%r,y=%r' % (x, y))
 			x, y = self.get_coordinate(x, y, theta=theta)
@@ -41,6 +41,6 @@ class GUIHelper2(GUIHelper):
 			if x != -1:
 				callback_click(x, y)
 
-		cv.bind('<Button-1>', paint)
+		cv.bind('<Button-1>', _callback_click)
 
-		GUIHelper.__init__(self, x1, y1, x2, y2, rows, columns, draw_line_fun, draw_chess_fun, clear_fun)
+		GUI_Base.__init__(self, x1, y1, x2, y2, rows, columns, draw_line_fun, draw_chess_fun, clear_fun)
