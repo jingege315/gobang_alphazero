@@ -1,5 +1,5 @@
-import BoardSave
-from Player import Player
+from BoardSave import BoardSave
+from Player.Player import Player
 
 
 class PlayerHuman(Player):
@@ -13,8 +13,12 @@ class PlayerHuman(Player):
 		self.x = x
 		self.y = y
 
-	def getNext(self, boardSave:BoardSave):
+	def getNext(self, boardSave:BoardSave, player_me):
 		if not self.new:
 			return None
 		self.new = False
 		return self.x, self.y
+
+	@staticmethod
+	def isAuto():
+		return False
