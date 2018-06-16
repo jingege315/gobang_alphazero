@@ -1,5 +1,5 @@
-from BoardSave import BoardSave
-from AI.ValuablePoint import ValuablePoint
+from ..BoardSave import BoardSave
+from .ValuablePoint import ValuablePoint
 
 
 class ValuablePointLinear(ValuablePoint):

@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox as tkMessageBox
 
-from BoardSave import BoardSave
+from Helper.BoardSave import BoardSave
 from Helper.Game import Game
 from Helper.GUI_TK import GUI_TK
 from Helper.Judge import Judge

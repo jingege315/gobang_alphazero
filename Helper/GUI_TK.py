@@ -1,4 +1,4 @@
-from GUI_Base import GUI_Base
+from .GUI_Base import GUI_Base
 
 
 class GUI_TK(GUI_Base):

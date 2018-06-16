@@ -1,5 +1,5 @@
-from BoardSave import BoardSave
-from Player.Player import Player
+from ..BoardSave import BoardSave
+from .Player import Player
 
 
 class PlayerHuman(Player):

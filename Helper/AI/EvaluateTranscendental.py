@@ -1,7 +1,7 @@
 import numpy as np
 
-from AI.Evaluate import Evaluate
-from BoardSave import BoardSave
+from .Evaluate import Evaluate
+from ..BoardSave import BoardSave
 
 
 class EvaluateTranscendental(Evaluate):

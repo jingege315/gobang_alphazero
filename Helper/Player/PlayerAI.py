@@ -1,7 +1,7 @@
-from BoardSave import BoardSave
-from Player.Player import Player
-from AI.Evaluate import Evaluate
-from AI.ValuablePoint import ValuablePoint
+from ..BoardSave import BoardSave
+from ..Player.Player import Player
+from ..AI.Evaluate import Evaluate
+from ..AI.ValuablePoint import ValuablePoint
 
 
 class PlayerAI(Player):

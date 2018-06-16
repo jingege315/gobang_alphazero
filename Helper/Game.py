@@ -1,6 +1,6 @@
-import GUI_Base
-from BoardSave import BoardSave
-from Judge import Judge
+from . import GUI_Base
+from .BoardSave import BoardSave
+from .Judge import Judge
 
 
 class Game(object):

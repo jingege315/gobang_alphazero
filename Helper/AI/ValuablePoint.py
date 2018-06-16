@@ -1,4 +1,4 @@
-from BoardSave import BoardSave
+from ..BoardSave import BoardSave
 
 
 class ValuablePoint(object):

@@ -1,17 +1,18 @@
 from tkinter import *
 from tkinter import messagebox as tkMessageBox
 
-from BoardSave import BoardSave
-from GameController import GameController
+from Helper.BoardSave import BoardSave
+from Helper.GameController import GameController
 from Helper.Game import Game
 from Helper.GUI_TK import GUI_TK
 from Helper.Judge import Judge
 
-from AI.EvaluateTranscendental import EvaluateTranscendental
-from AI.ValuablePointLinear import ValuablePointLinear
+from Helper.AI.EvaluateTranscendental import EvaluateTranscendental
+from Helper.AI.ValuablePointLinear import ValuablePointLinear
 
-from Player.PlayerAI_stupid_attacking import PlayerAI_stupid_attacking
-from Player.PlayerHuman import PlayerHuman
+from Helper.Player.PlayerAI_stupid_attacking import PlayerAI_stupid_attacking
+from Helper.Player.PlayerHuman import PlayerHuman
+
 # main window
 
 root = Tk()
@@ -45,4 +46,11 @@ Button(root, text='clear', command=gameController.clear).pack()
 
 gameController.start()
 
+
+def delete():
+	gameController.stop()
+	root.destroy()
+
+
+root.protocol('WM_DELETE_WINDOW', delete)
 root.mainloop()

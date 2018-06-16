@@ -1,14 +1,14 @@
 from tkinter import *
 from tkinter import messagebox as tkMessageBox
 
-from BoardSave import BoardSave
-from GameController import GameController
+from Helper.BoardSave import BoardSave
+from Helper.GameController import GameController
 from Helper.Game import Game
 from Helper.GUI_TK import GUI_TK
 from Helper.Judge import Judge
+from Helper.Player.PlayerHuman import PlayerHuman
 
 # main window
-from PlayerHuman import PlayerHuman
 
 root = Tk()
 # set the size of main window
@@ -34,9 +34,16 @@ game = Game(boardSave, helper, judge, callback_win=lambda x, y, winCondition, is
 player1 = PlayerHuman()
 player2 = PlayerHuman()
 gameController = GameController(player1, player2, game)
-Button(root, text='back', command=game.back).pack()
-Button(root, text='clear', command=game.clear).pack()
+Button(root, text='back', command=gameController.back).pack()
+Button(root, text='clear', command=gameController.clear).pack()
 
 gameController.start()
 
+
+def delete():
+	gameController.stop()
+	root.destroy()
+
+
+root.protocol('WM_DELETE_WINDOW', delete)
 root.mainloop()
