@@ -17,9 +17,9 @@ from Helper.Player.PlayerHuman import PlayerHuman
 
 root = Tk()
 # set the size of main window
-root.geometry('500x500')
+root.geometry('700x700')
 # create a canvas to draw board and chessman,and set the background of the canvas white
-cv = Canvas(root, bg='white', width=400, height=400)
+cv = Canvas(root, bg='white', width=600, height=600)
 cv.pack()
 
 
@@ -28,17 +28,17 @@ def callback_click(x, y):
 		player1.setTouchCoordinate(x, y)
 
 
-helper = GUI_TK(cv, 10, 10, 390, 390, callback_click=callback_click, theta=0.4)
+gui = GUI_TK(cv, 10, 10, 590, 590, callback_click=callback_click, theta=0.4,chess_radii=15)
 judge = Judge(15, 15, win_size=5)
 boardSave = BoardSave(15, 15)
-game = Game(boardSave, helper, judge, callback_win=lambda x, y, winCondition, isBlack: tkMessageBox.showinfo(
+game = Game(boardSave, gui, judge, callback_win=lambda x, y, winCondition, isBlack: tkMessageBox.showinfo(
 	'win', 'x=%r,y=%r,winCondition=%r,isBlack=%r' % (x, y, winCondition, isBlack)))
 
 player1 = PlayerHuman()
 
 valuablePoint = ValuablePointLinear()
 evaluate = EvaluateTranscendental(15, 15)
-player2 = PlayerAI_stupid_attacking(valuablePoint, evaluate)
+player2 = PlayerAI_stupid_attacking(valuablePoint, evaluate, gui)
 
 gameController = GameController(player1, player2, game)
 Button(root, text='back', command=gameController.back).pack()

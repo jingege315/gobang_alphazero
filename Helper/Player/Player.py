@@ -22,3 +22,12 @@ class Player(object):
 		:return:
 		"""
 		raise NotImplementedError()
+
+	def MoveFinish(self, boardSave:BoardSave):
+		"""
+		after using 'getNext' function moving successfully and _move(x,y) the point getNext return ,
+		this function will be callback to draw something and so on.
+		:param boardSave:
+		:return:
+		"""
+		pass

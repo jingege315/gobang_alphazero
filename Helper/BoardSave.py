@@ -38,8 +38,9 @@ class BoardSave(object):
 		self.board[x, y] = is_black
 
 	def back(self):
-		self.board[self.order[-1][0], self.order[-1][1]] = -1
-		self.order = self.order[:-1]
+		if len(self.order) >= 1:
+			self.board[self.order[-1][0], self.order[-1][1]] = -1
+			self.order = self.order[:-1]
 
 	def clear(self):
 		# save the order of chess moves,item=(x,y,color)

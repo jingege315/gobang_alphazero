@@ -22,7 +22,8 @@ class GameController(object):
 		while not self.game._isWin():
 			if self.exit:
 				return
-			if self.game.now_black:
+			black = self.game.now_black
+			if black:
 				ret = self.player_black.getNext(self.game.boardSave, BoardSave.black)
 			else:
 				ret = self.player_white.getNext(self.game.boardSave, BoardSave.white)
@@ -31,6 +32,10 @@ class GameController(object):
 				continue
 			x, y = ret
 			self.game._move(x, y)
+			if black:
+				ret = self.player_black.MoveFinish(self.game.boardSave)
+			else:
+				ret = self.player_white.MoveFinish(self.game.boardSave)
 		self.game.isWin()
 
 	def start(self):

@@ -51,23 +51,17 @@ class Game(object):
 			self.callback_win(x, y, winCondition, isBlack)
 			self.win_now = True
 
-	def __back(self):
-		if len(self.boardSave.order) < 1:
-			return
-		self.draw_helper.clear()
-		yield
-		self.draw_helper.draw_chesses(self.boardSave.order)
-		self.win_now = False
-
 	def back(self):
-		for one in self.__back():
-			self.boardSave.back()
+		self.boardSave.back()
+		self.draw_helper.draw_chesses(self.boardSave.order, is_clear=True)
+		self.win_now = False
 		self._change_color()
 
 	def back2steps(self):
-		for one in self.__back():
-			self.boardSave.back()
-			self.boardSave.back()
+		self.boardSave.back()
+		self.boardSave.back()
+		self.draw_helper.draw_chesses(self.boardSave.order, is_clear=True)
+		self.win_now = False
 
 	def clear(self):
 		self.draw_helper.clear()
