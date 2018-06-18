@@ -1,7 +1,6 @@
 from unittest import TestCase
-
-from AI.EvaluateTranscendental import EvaluateTranscendental
-from BoardSave import BoardSave
+from ..Helper.AI.EvaluateNormal import EvaluateNormal
+from ..Helper.BoardSave import BoardSave
 
 
 class TestEvaluateTranscendental(TestCase):
@@ -19,30 +18,30 @@ class TestEvaluateTranscendental(TestCase):
 					array[two] = other_color
 					for back in range(two + 1, 9):
 						array[back] = BoardSave.none
-					ret = EvaluateTranscendental._remove(array, other_color)
+					ret = EvaluateNormal._remove(array, other_color)
 					assert len(ret) == two - one - 1
 
 	def test_evaluate_one_direction(self):
 		array = [BoardSave.none, ] * 2 + [BoardSave.black, ] * 5 + [BoardSave.none, ] * 2
-		assert EvaluateTranscendental.evaluate_one_direction(array, BoardSave.black) == 5
+		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == 5
 
 		array = [BoardSave.none, ] * 2 + [BoardSave.black, ] * 4 + [BoardSave.none, ] * 3
-		assert EvaluateTranscendental.evaluate_one_direction(array, BoardSave.black) == 4
+		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == 4
 
 		array = [BoardSave.none, ] * 2 + [BoardSave.black, ] * 3 + [BoardSave.none, ] * 4
-		assert EvaluateTranscendental.evaluate_one_direction(array, BoardSave.black) == (3, False)
+		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == (3, False)
 
 		array = [BoardSave.black, ] + [BoardSave.none, ] * 2 + [BoardSave.black, ] * 2 + [BoardSave.none, ] * 4
-		assert EvaluateTranscendental.evaluate_one_direction(array, BoardSave.black) == (3, True)
+		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == (3, True)
 
 		array = [BoardSave.none, ] * 3 + [BoardSave.black, ] * 2 + [BoardSave.none, ] * 4
-		assert EvaluateTranscendental.evaluate_one_direction(array, BoardSave.black) == (2, False)
+		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == (2, False)
 
 		array = [BoardSave.black, ] + [BoardSave.none, ] * 3 + [BoardSave.black, ] + [BoardSave.none, ] * 4
-		assert EvaluateTranscendental.evaluate_one_direction(array, BoardSave.black) == (2, True)
+		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == (2, True)
 
 		array = [BoardSave.none, ] * 4 + [BoardSave.black, ] + [BoardSave.none, ] * 4
-		assert EvaluateTranscendental.evaluate_one_direction(array, BoardSave.black) == 1
+		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == 1
 
 	def test_getValue(self):
 		"""
@@ -105,5 +104,5 @@ class TestEvaluateTranscendental(TestCase):
 						continue
 					save.add(x, y, char == '1')
 			print(save)
-			transcendental = EvaluateTranscendental(15, 15)
+			transcendental = EvaluateNormal(15, 15)
 			print(transcendental.getValue(save, 2, 3, BoardSave.black))

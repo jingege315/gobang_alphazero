@@ -4,7 +4,7 @@ from .Evaluate import Evaluate
 from ..BoardSave import BoardSave
 
 
-class EvaluateTranscendental(Evaluate):
+class EvaluateNormal(Evaluate):
 	"""
 	score dict:
 	key : the board item number of array (dim:9) after _remove() function ,
@@ -67,16 +67,16 @@ class EvaluateTranscendental(Evaluate):
 		"""
 		player_him = BoardSave.exchangePlayer(player_me)
 
-		array = EvaluateTranscendental._remove(array, player_him)
+		array = EvaluateNormal._remove(array, player_him)
 		edge = array[0] == player_me or array[-1] == player_me
 		num = array.count(player_me)
 
-		if num in EvaluateTranscendental.scores.keys():
+		if num in EvaluateNormal.scores.keys():
 			if len(array) >= 5:
 				return num
 			else:
 				return 0
-		elif (num, edge) in EvaluateTranscendental.scores.keys():
+		elif (num, edge) in EvaluateNormal.scores.keys():
 			if len(array) >= 6 or edge == True:
 				return num, edge
 			else:
@@ -108,7 +108,7 @@ class EvaluateTranscendental(Evaluate):
 		coordinate3 = createCoordinate(lambda x: x, lambda y: y)
 		# right-raising
 		coordinate4 = createCoordinate(lambda x: -x, lambda y: y)
-		values = [EvaluateTranscendental.evaluate_one_direction(one, player_me) for one in
+		values = [EvaluateNormal.evaluate_one_direction(one, player_me) for one in
 				  (coordinate1, coordinate2, coordinate3, coordinate4)]
-		score = [EvaluateTranscendental.scores[one] for one in values]
+		score = [EvaluateNormal.scores[one] for one in values]
 		return sum(score)

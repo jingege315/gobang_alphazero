@@ -68,3 +68,7 @@ class Judge(object):
 			if check != 0:
 				return x, y, True, check, boardSave.board[x, y] == BoardSave.black
 		return 0, 0, False, 0, 0
+
+	def isWin(self, boardSave: BoardSave):
+		x, y, isWin, winCondition, isBlack = self.win(boardSave)
+		return isWin

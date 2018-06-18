@@ -1,7 +1,6 @@
 from unittest import TestCase
-
-from BoardSave import BoardSave
-from ValuablePointLinear import ValuablePointLinear
+from ..Helper.BoardSave import BoardSave
+from ..Helper.AI.ValuablePointLinear import ValuablePointLinear
 
 
 class TestValuablePointLinear(TestCase):

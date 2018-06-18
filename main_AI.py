@@ -7,14 +7,15 @@ from Helper.Game import Game
 from Helper.GUI_TK import GUI_TK
 from Helper.Judge import Judge
 
-from Helper.AI.EvaluateTranscendental import EvaluateTranscendental
+from Helper.AI.EvaluateNormal import EvaluateNormal
 from Helper.AI.ValuablePointLinear import ValuablePointLinear
+# from Helper.AI.SearchMaxmin import SearchMaxmin
+# from Helper.Player.PlayerAI_search import PlayerAI_search
 
-from Helper.Player.PlayerAI_stupid_attacking import PlayerAI_stupid_attacking
+from Helper.Player.PlayerAI_single_step import PlayerAI_single_step
 from Helper.Player.PlayerHuman import PlayerHuman
 
 # main window
-
 root = Tk()
 # set the size of main window
 root.geometry('700x700')
@@ -28,7 +29,7 @@ def callback_click(x, y):
 		player1.setTouchCoordinate(x, y)
 
 
-gui = GUI_TK(cv, 10, 10, 590, 590, callback_click=callback_click, theta=0.4,chess_radii=15)
+gui = GUI_TK(cv, 10, 10, 590, 590, callback_click=callback_click, theta=0.4, chess_radii=15)
 judge = Judge(15, 15, win_size=5)
 boardSave = BoardSave(15, 15)
 game = Game(boardSave, gui, judge, callback_win=lambda x, y, winCondition, isBlack: tkMessageBox.showinfo(
@@ -36,9 +37,12 @@ game = Game(boardSave, gui, judge, callback_win=lambda x, y, winCondition, isBla
 
 player1 = PlayerHuman()
 
+# define player2
 valuablePoint = ValuablePointLinear()
-evaluate = EvaluateTranscendental(15, 15)
-player2 = PlayerAI_stupid_attacking(valuablePoint, evaluate, gui)
+evaluate = EvaluateNormal(15, 15)
+player2 = PlayerAI_single_step(valuablePoint, evaluate, gui)
+# search = SearchMaxmin(valuablePoint, evaluate, depth=2)
+# player2=PlayerAI_search(valuablePoint, evaluate, search)
 
 gameController = GameController(player1, player2, game)
 Button(root, text='back', command=gameController.back).pack()
