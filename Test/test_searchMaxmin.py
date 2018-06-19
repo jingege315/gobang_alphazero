@@ -1,8 +1,8 @@
 from unittest import TestCase
-from ..Helper.AI.EvaluateNormal import EvaluateNormal
-from ..Helper.AI.SearchMaxmin import SearchMaxmin
-from ..Helper.AI.ValuablePointLinear import ValuablePointLinear
-from ..Helper.BoardSave import BoardSave
+from Helper.AI.EvaluateNormal import EvaluateNormal
+from Helper.AI.SearchMaxmin import SearchMaxmin
+from Helper.AI.ValuablePointLinear import ValuablePointLinear
+from Helper.BoardSave import BoardSave
 
 
 class TestSearchMaxmin(TestCase):

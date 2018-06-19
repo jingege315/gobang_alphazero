@@ -1,10 +1,10 @@
 import numpy as np
 
-from .Evaluate import Evaluate
+from .Evaluate9Cells import Evaluate9Cells
 from ..BoardSave import BoardSave
 
 
-class EvaluateNormal(Evaluate):
+class EvaluateNormal(Evaluate9Cells):
 	"""
 	score dict:
 	key : the board item number of array (dim:9) after _remove() function ,
@@ -58,13 +58,6 @@ class EvaluateNormal(Evaluate):
 
 	@staticmethod
 	def evaluate_one_direction(array, player_me):
-		"""
-		get the value of the given array
-		:param array: it is a list,dim=9
-			index 4,the value represent the location where the chess need to move soon
-		:param player_me:
-		:return: one item of conditions
-		"""
 		player_him = BoardSave.exchangePlayer(player_me)
 
 		array = EvaluateNormal._remove(array, player_him)
@@ -73,42 +66,12 @@ class EvaluateNormal(Evaluate):
 
 		if num in EvaluateNormal.scores.keys():
 			if len(array) >= 5:
-				return num
+				return EvaluateNormal.scores[num]
 			else:
-				return 0
+				return EvaluateNormal.scores[0]
 		elif (num, edge) in EvaluateNormal.scores.keys():
 			if len(array) >= 6 or edge == True:
-				return num, edge
+				return EvaluateNormal.scores[(num, edge)]
 			else:
-				return 0
+				return EvaluateNormal.scores[0]
 		raise Exception()
-
-	def getValue(self, boardSave: BoardSave, x, y, player_me):
-		player_him = BoardSave.exchangePlayer(player_me)
-
-		def createCoordinate(x_fun, y_fun):
-			ret = []
-			for i in range(-4, 5):
-				if i == 0:
-					ret.append(player_me)
-					continue
-				x_ = x + x_fun(i)
-				y_ = y + y_fun(i)
-				if boardSave.isLegalPoint(x_, y_):
-					ret.append(boardSave.board[x_][y_])
-				else:
-					ret.append(player_him)
-			return ret
-
-		# vertical
-		coordinate1 = createCoordinate(lambda x: x, lambda y: 0)
-		# horizontal
-		coordinate2 = createCoordinate(lambda x: 0, lambda y: y)
-		# right-falling
-		coordinate3 = createCoordinate(lambda x: x, lambda y: y)
-		# right-raising
-		coordinate4 = createCoordinate(lambda x: -x, lambda y: y)
-		values = [EvaluateNormal.evaluate_one_direction(one, player_me) for one in
-				  (coordinate1, coordinate2, coordinate3, coordinate4)]
-		score = [EvaluateNormal.scores[one] for one in values]
-		return sum(score)

@@ -7,6 +7,7 @@ from Helper.Game import Game
 from Helper.GUI_TK import GUI_TK
 from Helper.Judge import Judge
 
+from Helper.AI.EvaluateNormal2 import EvaluateNormal2
 from Helper.AI.EvaluateNormal import EvaluateNormal
 from Helper.AI.ValuablePointLinear import ValuablePointLinear
 from Helper.AI.SearchMaxmin import SearchMaxmin
@@ -39,10 +40,11 @@ player1 = PlayerHuman()
 
 # define player2
 valuablePoint = ValuablePointLinear()
-evaluate = EvaluateNormal(15, 15)
-# player2 = PlayerAI_single_step(valuablePoint, evaluate, gui)
-search = SearchMaxmin(valuablePoint, evaluate, depth=2)
-player2=PlayerAI_search(valuablePoint, evaluate,gui,search)
+# evaluate = EvaluateNormal(15, 15)
+evaluate = EvaluateNormal2(15, 15)
+player2 = PlayerAI_single_step(valuablePoint, evaluate, gui)
+# search = SearchMaxmin(valuablePoint, evaluate, depth=2)
+# player2=PlayerAI_search(valuablePoint, evaluate,gui,search)
 
 gameController = GameController(player1, player2, game)
 Button(root, text='back', command=gameController.back).pack()

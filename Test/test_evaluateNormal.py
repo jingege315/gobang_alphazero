@@ -1,9 +1,9 @@
 from unittest import TestCase
-from ..Helper.AI.EvaluateNormal import EvaluateNormal
-from ..Helper.BoardSave import BoardSave
+from Helper.AI.EvaluateNormal import EvaluateNormal
+from Helper.BoardSave import BoardSave
 
 
-class TestEvaluateTranscendental(TestCase):
+class TestEvaluateNormal(TestCase):
 	def test__remove(self):
 		array = [BoardSave.none, ] * 9
 		for color in (BoardSave.black, BoardSave.white):
@@ -26,7 +26,7 @@ class TestEvaluateTranscendental(TestCase):
 		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == 5
 
 		array = [BoardSave.none, ] * 2 + [BoardSave.black, ] * 4 + [BoardSave.none, ] * 3
-		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == 4
+		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == (4,False)
 
 		array = [BoardSave.none, ] * 2 + [BoardSave.black, ] * 3 + [BoardSave.none, ] * 4
 		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == (3, False)
