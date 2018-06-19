@@ -8,8 +8,7 @@ import numpy
 
 class PlayerAI_single_step(PlayerAI):
 	def __init__(self, valuablePoint: ValuablePoint, evaluate: Evaluate, gui: GUI_Base):
-		super().__init__(valuablePoint, evaluate)
-		self.gui = gui
+		super().__init__(valuablePoint, evaluate, gui)
 		self.data = None
 
 	def getNext(self, boardSave: BoardSave, player_me):

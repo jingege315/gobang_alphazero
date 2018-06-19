@@ -9,8 +9,8 @@ from Helper.Judge import Judge
 
 from Helper.AI.EvaluateNormal import EvaluateNormal
 from Helper.AI.ValuablePointLinear import ValuablePointLinear
-# from Helper.AI.SearchMaxmin import SearchMaxmin
-# from Helper.Player.PlayerAI_search import PlayerAI_search
+from Helper.AI.SearchMaxmin import SearchMaxmin
+from Helper.Player.PlayerAI_search import PlayerAI_search
 
 from Helper.Player.PlayerAI_single_step import PlayerAI_single_step
 from Helper.Player.PlayerHuman import PlayerHuman
@@ -40,9 +40,9 @@ player1 = PlayerHuman()
 # define player2
 valuablePoint = ValuablePointLinear()
 evaluate = EvaluateNormal(15, 15)
-player2 = PlayerAI_single_step(valuablePoint, evaluate, gui)
-# search = SearchMaxmin(valuablePoint, evaluate, depth=2)
-# player2=PlayerAI_search(valuablePoint, evaluate, search)
+# player2 = PlayerAI_single_step(valuablePoint, evaluate, gui)
+search = SearchMaxmin(valuablePoint, evaluate, depth=2)
+player2=PlayerAI_search(valuablePoint, evaluate,gui,search)
 
 gameController = GameController(player1, player2, game)
 Button(root, text='back', command=gameController.back).pack()
