@@ -18,16 +18,48 @@ Now,I have finish the step 2.
 there are three python files to run.
 1. main_base_without_player_control.py
 2. main_base_with_player_control.py
-3. main_AI_stupid_attacking.py
+3. main_AI.py
+3. main_AI_competition.py
 
-__assuming you want to play with the stupid AI,you can:__
+* __assuming you want to play with the simple AI,you can:__
+
 windows：
 ```
-py -3 main_AI_stupid_attacking.py
+py -3 main_AI.py
 ```
 linux:
 ```
-python3 main_AI_stupid_attacking.py
+python3 main_AI.py
 ```
-I find the AI is so stupid that it pay all attention to attacking me,so it is difficult if I only defend the attack of AI.
+note:this AI you play with is a simple AI for gobang 
+who only can consider chess board in one step.
 
+* __assuming you want to watch the stupid competition among AIs,you can:__
+
+windows：
+```
+py -3 main_AI_competition.py
+```
+linux:
+```
+python3 main_AI_competition.py
+```
+the result may be this:
+```
+ |           1                   | 
+ |         2   1                 | 
+ |   1 2 2 2 2 1 2 1   2         | 
+ | 1   2   2   1 2 2 1           | 
+ |   2 1 1 1 1 2   1 2 2         | 
+ | 2 1 2   2 2 1 1 1 2 1         | 
+ |       2 1 1 2 2 1 2 1 2 1     | 
+ |       1 2 2 1 1 1 2 1 1 2     | 
+ |         2 1 1 2 2 1 2 2 2 1 2 | 
+ |   2   1 2 1 1 2 2 2 1 2 2 1   | 
+ |   1 1 2 2 1 2 1 1 2 1 2 2 2 1 | 
+ |     2 1 1 1 1 2 2 1 1 2 1 1 1 | 
+ |   1   2 1 2 2 2 1 1 2 2 2 1 2 | 
+ |         1 2 2 1   1 2 1       | 
+ |         1 1 2     1           | 
+```
+Wow!Interesting.
