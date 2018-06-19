@@ -33,7 +33,8 @@ class Game(object):
 			return
 		self.boardSave.add(x, y, self.now_black)
 
-		self.draw_helper.draw_chess(x, y, self.now_black)
+		if self.draw_helper is not None:
+			self.draw_helper.draw_chess(x, y, self.now_black)
 		self._change_color()
 
 	def _isWin(self):
@@ -53,18 +54,21 @@ class Game(object):
 
 	def back(self):
 		self.boardSave.back()
-		self.draw_helper.draw_chesses(self.boardSave.order, is_clear=True)
+		if self.draw_helper is not None:
+			self.draw_helper.draw_chesses(self.boardSave.order, is_clear=True)
 		self.win_now = False
 		self._change_color()
 
 	def back2steps(self):
 		self.boardSave.back()
 		self.boardSave.back()
-		self.draw_helper.draw_chesses(self.boardSave.order, is_clear=True)
+		if self.draw_helper is not None:
+			self.draw_helper.draw_chesses(self.boardSave.order, is_clear=True)
 		self.win_now = False
 
 	def clear(self):
-		self.draw_helper.clear()
+		if self.draw_helper is not None:
+			self.draw_helper.clear()
 		self.boardSave.clear()
 		self.now_black = True
 		# stand whether win

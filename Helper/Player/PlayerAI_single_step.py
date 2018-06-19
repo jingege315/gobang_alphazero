@@ -24,6 +24,8 @@ class PlayerAI_single_step(PlayerAI):
 		return points[max_index]
 
 	def MoveFinish(self, boardSave: BoardSave):
+		if self.gui is None:
+			return
 		self.gui.draw_chesses(boardSave.order, is_clear=True)
 		for (x, y), score in self.data:
 			if score == numpy.infty:

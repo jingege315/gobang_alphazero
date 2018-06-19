@@ -37,14 +37,37 @@ class GameController(object):
 			else:
 				ret = self.player_white.MoveFinish(self.game.boardSave)
 		self.game.isWin()
+		self.stop()
 
 	def start(self):
+		self.game.clear()
 		if self.thread is None or not self.thread.isAlive():
 			self.thread = threading.Thread(target=self._start)
 			self.thread.start()
+		self.exit = False
+
+	def start_noThread(self):
+		self.game.clear()
+		while not self.game._isWin():
+			black = self.game.now_black
+			if black:
+				ret = self.player_black.getNext(self.game.boardSave, BoardSave.black)
+			else:
+				ret = self.player_white.getNext(self.game.boardSave, BoardSave.white)
+			x, y = ret
+			self.game._move(x, y)
+			if black:
+				ret = self.player_black.MoveFinish(self.game.boardSave)
+			else:
+				ret = self.player_white.MoveFinish(self.game.boardSave)
+		self.game.isWin()
+		self.stop()
 
 	def stop(self):
 		self.exit = True
+
+	def isStop(self):
+		return self.exit
 
 	def back(self):
 		if self.player_black.isAuto() and self.player_white.isAuto():
@@ -55,8 +78,4 @@ class GameController(object):
 			self.game.back2steps()
 		else:
 			self.game.back()
-		self.start()
-
-	def clear(self):
-		self.game.clear()
 		self.start()

@@ -48,7 +48,7 @@ player2 = PlayerAI_single_step(valuablePoint, evaluate, gui)
 
 gameController = GameController(player1, player2, game)
 Button(root, text='back', command=gameController.back).pack()
-Button(root, text='clear', command=gameController.clear).pack()
+Button(root, text='clear', command=gameController.start).pack()
 
 gameController.start()
 
