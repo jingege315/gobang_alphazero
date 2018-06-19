@@ -14,6 +14,8 @@ class GameController(object):
 	def __init__(self, player_black: Player, player_white: Player, game: Game):
 		self.player_black = player_black
 		self.player_white = player_white
+		player_black.isBlack=True
+		player_white.isBlack=False
 		self.game = game
 		self.thread = None
 		self.exit = False
@@ -41,10 +43,10 @@ class GameController(object):
 
 	def start(self):
 		self.game.clear()
+		self.exit = False
 		if self.thread is None or not self.thread.isAlive():
 			self.thread = threading.Thread(target=self._start)
 			self.thread.start()
-		self.exit = False
 
 	def start_noThread(self):
 		self.game.clear()

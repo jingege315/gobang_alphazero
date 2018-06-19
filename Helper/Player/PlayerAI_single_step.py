@@ -14,6 +14,7 @@ class PlayerAI_single_step(PlayerAI):
 	def getNext(self, boardSave: BoardSave, player_me):
 		points = self.valuablePoint.getPoints(boardSave, player_me)
 		if len(points) == 0:
+			self.data = zip(((7,7),), (666,))
 			return 7, 7
 
 		values = [self.evaluate.getValue(boardSave, x, y, player_me)

@@ -26,7 +26,7 @@ cv.pack()
 
 
 def callback_click(x, y):
-	if game.now_black:
+	if game.now_black == player1.isBlack:
 		player1.setTouchCoordinate(x, y)
 
 
