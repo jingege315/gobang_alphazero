@@ -1,7 +1,6 @@
 import numpy as np
-
 from .Evaluate9Cells import Evaluate9Cells
-from ..BoardSave import BoardSave
+from ..Base import *
 
 
 class EvaluateNormal(Evaluate9Cells):
@@ -13,7 +12,7 @@ class EvaluateNormal(Evaluate9Cells):
 				if False,need the length of array after _remove() >=6,
 					because the score of this condition is higher than True,and the condition is more likely win the competition
 	"""
-	scores = {
+	_scores = {
 		5: np.infty,
 		(4, False): 1_000_000,
 		(4, True): 100_000,
@@ -25,18 +24,15 @@ class EvaluateNormal(Evaluate9Cells):
 		0: 0,
 	}
 
-	def __init__(self, rows, columns):
-		self.rows, self.columns = rows, columns
-
 	@staticmethod
-	def _remove(array, player_him):
+	def _remove(array, player_him: Chess):
 		"""
 		get the maximum array that is not contain the chess of others in the given array
-		:param array: it is a list,dim=9
+		:param array: it is a list,whose length is 9
 		:return: array which remove other's chess
 		"""
 		assert len(array) == 9
-		assert BoardSave.isPlayer(player_him)
+		assert player_him.exchange()
 
 		start = 3
 		end = 5
@@ -57,21 +53,21 @@ class EvaluateNormal(Evaluate9Cells):
 		return array[start:end + 1]
 
 	@staticmethod
-	def evaluate_one_direction(array, player_me):
-		player_him = BoardSave.exchangePlayer(player_me)
+	def _evaluate_one_direction(array, player_me: Chess):
+		player_him = player_me.exchange()
 
 		array = EvaluateNormal._remove(array, player_him)
 		edge = array[0] == player_me or array[-1] == player_me
 		num = array.count(player_me)
 
-		if num in EvaluateNormal.scores.keys():
+		if num in EvaluateNormal._scores.keys():
 			if len(array) >= 5:
-				return EvaluateNormal.scores[num]
+				return EvaluateNormal._scores[num]
 			else:
-				return EvaluateNormal.scores[0]
-		elif (num, edge) in EvaluateNormal.scores.keys():
+				return EvaluateNormal._scores[0]
+		elif (num, edge) in EvaluateNormal._scores.keys():
 			if len(array) >= 6 or edge == True:
-				return EvaluateNormal.scores[(num, edge)]
+				return EvaluateNormal._scores[(num, edge)]
 			else:
-				return EvaluateNormal.scores[0]
+				return EvaluateNormal._scores[0]
 		raise Exception()

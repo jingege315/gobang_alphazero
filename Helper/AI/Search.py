@@ -1,31 +1,36 @@
 from .Evaluate import Evaluate
 from .ValuablePoint import ValuablePoint
-from ..BoardSave import BoardSave
+from ..Base import *
 
 
 class Search(object):
-	def __init__(self, valuablePoint: ValuablePoint, evaluate: Evaluate):
-		self.valuablePoint = valuablePoint
-		self.evaluate = evaluate
-		self.route = []
-		self.score = None
-		self.point = None
+	def __init__(self, valuable_point: ValuablePoint, evaluate: Evaluate):
+		self._valuablePoint = valuable_point
+		self._evaluate = evaluate
+		self._route = []
+		self._score = None
+		self._point = None
 		# save the last scores's result
-		self.scores = None
-		self.points = None
+		self._scores = None
+		self._points = None
 
-	def _run(self, boardSave: BoardSave, player_me):
+	def run(self, board: BoardSave, player: Chess):
 		raise NotImplementedError()
 
-	def getNext(self, boardSave: BoardSave, player_me):
-		self._run(boardSave, player_me)
-		return self.point
+	def get_next(self, board: BoardSave, player) -> (int, int):
+		"""
+		get the point using search algorithm in 'run' function
+		:param board:
+		:param player:
+		:return:
+		"""
+		return self._point
 
-	def getSearchPoints(self):
-		return self.route
+	def get_search_points(self) -> list:
+		return self._route
 
-	def getSearchScore(self):
-		return self.score
+	def get_search_score(self) -> int:
+		return self._score
 
-	def getLastScores(self):
-		return self.points, self.scores
+	def get_last_scores(self) -> list:
+		return self._points, self._scores

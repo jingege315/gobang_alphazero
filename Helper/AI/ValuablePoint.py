@@ -1,4 +1,4 @@
-from ..BoardSave import BoardSave
+from ..Base import *
 
 
 class ValuablePoint(object):
@@ -6,11 +6,10 @@ class ValuablePoint(object):
 	get the valuable points in the board
 	"""
 
-	def getPoints(self, boardSave: BoardSave, player_me):
+	def get_points(self, board: BoardSave, player: Chess) -> list:
 		"""
-
-		:param boardSave:
-		:param player_me:
+		:param board:
+		:param player:
 		:return: the valuable points
 		"""
 		raise NotImplementedError()

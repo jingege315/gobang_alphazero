@@ -1,23 +1,21 @@
 from copy import deepcopy
-
-from Helper.Judge import Judge
 from .Search import Search
-from ..BoardSave import BoardSave
 from .Evaluate import Evaluate
 from .ValuablePoint import ValuablePoint
+from ..Base import *
 
 
 class SearchMaxmin(Search):
-	def __init__(self, valuablePoint: ValuablePoint, evaluate: Evaluate, depth=6):
+	def __init__(self, valuable_point: ValuablePoint, evaluate: Evaluate, win_size, depth=6):
 		assert depth % 2 == 0 and depth != 0
-		super().__init__(valuablePoint, evaluate)
+		super().__init__(valuable_point, evaluate)
 		self.depth = depth
-		self.judge = Judge(15, 15, 5)
+		self.judge = Judge(win_size)
 
-	def _run_core(self, boardSave: BoardSave, x0, y0, player_me, player_now, depth):
+	def _run_core(self, board: BoardSave, x0, y0, player_me, player_now, depth):
 		"""
 
-		:param boardSave: the board in this function
+		:param board: the board in this function
 		:param x0: the point will move,if x0==-1,it means the first time running this function
 		:param y0: the point will move
 		:param player_me: the initial player
@@ -26,23 +24,23 @@ class SearchMaxmin(Search):
 		:return: the score moving here and all points going through
 		"""
 		# stop recurrence
-		if depth == 0 or self.judge.isWin(boardSave):
-			score_me = self.evaluate.getValue(boardSave, x0, y0, player_me)
-			score_opponent = self.evaluate.getValue(boardSave, x0, y0, BoardSave.exchangePlayer(player_me))
+		if depth == 0 or self.judge.is_win(board):
+			score_me = self._evaluate.get_value(board, x0, y0, player_me)
+			score_opponent = self._evaluate.get_value(board, x0, y0, player_me.exchange())
 			score = score_me - score_opponent
 			return score, [(x0, y0)]
 
 		# move step
 		if x0 != -1:
-			boardSave.add(x0, y0, player_now == BoardSave.black)
-			player_now = boardSave.exchangePlayer(player_now)
+			board.add(x0, y0, player_now)
+			player_now = player_now.exchange()
 
 		# calculate the score of each valuable point
 		scores = []
 		routes = []
-		points = self.valuablePoint.getPoints(boardSave, player_now)
+		points = self._valuablePoint.get_points(board, player_now)
 		for x, y in points:
-			score, route = self._run_core(deepcopy(boardSave), x, y, player_me, player_now, depth - 1)
+			score, route = self._run_core(deepcopy(board), x, y, player_me, player_now, depth - 1)
 			print('route:', route, ',score:', score)
 			scores.append(score)
 			routes.append(route)
@@ -61,6 +59,6 @@ class SearchMaxmin(Search):
 
 		return score, route
 
-	def _run(self, boardSave: BoardSave, player_me):
-		self.score, self.route = self._run_core(boardSave, -1, -1, player_me, player_me, self.depth)
+	def run(self, board: BoardSave, player):
+		self.score, self.route = self._run_core(board, -1, -1, player, player, self.depth)
 		self.point = self.route[-1]

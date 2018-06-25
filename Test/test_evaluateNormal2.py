@@ -1,23 +1,22 @@
 from unittest import TestCase
-from Helper.AI.EvaluateNormal2 import EvaluateNormal2
-from Helper.BoardSave import BoardSave
+from Helper import *
 
 
 class TestEvaluateNormal2(TestCase):
 	def test__remove(self):
-		array = [BoardSave.none, ] * 9
-		for color in (BoardSave.black, BoardSave.white):
-			other_color = BoardSave.exchangePlayer(color)
+		array = [Chess.NONE, ] * 9
+		for color in (Chess.BLACK, Chess.WHITE):
+			other_color = color.exchange()
 			for one in range(4):
 				for two in range(5, 9):
 					for front in range(0, one):
-						array[front] = BoardSave.none
+						array[front] = Chess.NONE
 					array[one] = other_color
 					for mid in range(one + 1, two):
 						array[mid] = color
 					array[two] = other_color
 					for back in range(two + 1, 9):
-						array[back] = BoardSave.none
+						array[back] = Chess.NONE
 					ret = EvaluateNormal2._remove(array, other_color)
 					assert len(ret) == two - one - 1
 
@@ -45,10 +44,10 @@ class TestEvaluateNormal2(TestCase):
 	def test__situation_match(self):
 		for s in ('nbbnbn', 'nbbnbn'[::-1], 'nbbnbn', 'bbbnbb', 'bnnbb'):
 			print()
-			for situation in EvaluateNormal2.score_situation.keys():
-				array = [BoardSave.none if i == 'n' else BoardSave.black if i == 'b' else BoardSave.white for i in s]
-				print(EvaluateNormal2.score_situation[situation], ' : ',
-					  EvaluateNormal2._situation_match(situation, array, BoardSave.black))
+			for situation in EvaluateNormal2._score_situation.keys():
+				array = [Chess.NONE if i == 'n' else Chess.BLACK if i == 'b' else Chess.WHITE for i in s]
+				print(EvaluateNormal2._score_situation[situation], ' : ',
+					  EvaluateNormal2._situation_match(situation, array, Chess.BLACK))
 
 	def test_evaluate_one_direction(self):
 		s = [
@@ -69,18 +68,18 @@ class TestEvaluateNormal2(TestCase):
 
 		]
 		for situation, result in s:
-			result = result.replace(' ', '_')
+			result = EvaluateNormal2._score_dict[result.replace(' ', '_')]
 			for one_instance in TestEvaluateNormal2.evaluate_one_direction_generator(situation):
 				two = one_instance.replace(' ', '')
 				assert len(two) == 9
 				assert two.count('_') == 1
 				assert two.find('_') == 4
-				array2 = [BoardSave.none if i == 'n' or i == '_' else BoardSave.black if i == 'b' else BoardSave.white
+				array2 = [Chess.NONE if i == 'n' or i == '_' else Chess.BLACK if i == 'b' else Chess.WHITE
 						  for i in two]
-				result_real = EvaluateNormal2.evaluate_one_direction(array2, BoardSave.black)
+				result_real = EvaluateNormal2._evaluate_one_direction(array2, Chess.BLACK)
 				assertion = result_real == result
 				print('condition=%s,%r==%r(real)' % (one_instance, result, result_real))
-				assert assertion
+				assert result_real == result
 
 	def test_getValue(self):
 		"""
@@ -89,27 +88,9 @@ class TestEvaluateNormal2(TestCase):
 		'0' replace moving black in next step
 		' ' replace none
 		'2' replace white
-
-		| _ _ _ _ _ _ _ _
-		| 2 1 2 2 2 1 2 2
-		| 2 2 1 2 1 2 2 2
-		| 2   1 0 1 1   2
-		| 2 2 1 2 1 2 2 2
-		| 2 2 2 2 2 1 2 2
-		| 2 2 2 2 2 2 2 2
-		| 2 2 2 2 2 2 2 2
-
-		| _ _ _ _ _ _ _ _
-		| 2   2 2 2 1 2 2
-		| 2 2 1 2 1 2 2 2
-		| 2 2 1 0 1 1   2
-		| 2 2 1 2 1 2 2 2
-		| 2 2 2 2 2   2 2
-		| 2 2 2 2 2 2 2 2
-		| 2 2 2 2 2 2 2 2
-		:return:
 		"""
-		save = BoardSave(15, 15)
+		board_size = BoardSize(15, 15)
+		save = BoardSave(board_size)
 		s = [[
 			'21222122',
 			'22121222',
@@ -141,7 +122,7 @@ class TestEvaluateNormal2(TestCase):
 				for y, char in enumerate(one):
 					if char == ' ':
 						continue
-					save.add(x, y, char == '1')
+					save.add(x, y, Chess.BLACK if char == '1' else Chess.WHITE)
 			print(save)
-			transcendental = EvaluateNormal2(15, 15)
-			print(transcendental.getValue(save, 2, 3, BoardSave.black))
+			transcendental = EvaluateNormal2()
+			print(transcendental.get_value(save, 2, 3, Chess.BLACK))

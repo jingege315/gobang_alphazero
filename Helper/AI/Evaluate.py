@@ -1,10 +1,13 @@
-from ..BoardSave import BoardSave
+from ..Base import *
 
 
 class Evaluate(object):
 	"""
-	to evaluate the score in coordinate(x,y) about player_me
+	evaluate the player's score in coordinate(x,y)
 	"""
 
-	def getValue(self, boardSave: BoardSave, x, y, player_me):
+	def get_value(self, board: BoardSave, x, y, player: Chess) -> int:
+		"""
+		evaluate the player's score in coordinate(x,y)
+		"""
 		raise NotImplementedError()

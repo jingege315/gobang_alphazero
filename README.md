@@ -16,27 +16,26 @@ Now,I have finish the step 2.
 
 ## how to run
 there are three python files to run.
-1. main_base_without_player_control.py
-2. main_base_with_player_control.py
+1. main_base.py
 3. main_AI.py
 3. main_AI_competition.py
 
-* __assuming you want to play with the simple AI,you can:__
+* __assuming you want to play with the simple AI on the offensive(or not),you can:__
 
-windows：
+windows:
 ```
-py -3 main_AI.py
+py -3 main_AI.py --you true(or false)
 ```
 linux:
 ```
-python3 main_AI.py
+python3 main_AI.py --you true(or false)
 ```
 note:this AI you play with is a simple AI for gobang 
 who only can consider chess board in one step.
 
 * __assuming you want to watch the stupid competition among AIs,you can:__
 
-windows：
+windows:
 ```
 py -3 main_AI_competition.py
 ```
@@ -63,3 +62,10 @@ the result may be this:
  |         1 1 2     1           | 
 ```
 Wow!Interesting.
+
+## code style
+I use PEP8 style guide for my python code.
+
+## project structure
+This is the project structure edited by 'Astah'
+<img src="Image/Class Diagram.png" width="600" hegiht="600" align=center />

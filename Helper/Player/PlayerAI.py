@@ -1,19 +1,17 @@
-from ..BoardSave import BoardSave
-from ..Player.Player import Player
-from ..AI.Evaluate import Evaluate
-from ..AI.ValuablePoint import ValuablePoint
-from ..GUI_Base import GUI_Base
+from . import Player
+from ..Base import *
 
 
 class PlayerAI(Player):
-	def __init__(self, valuablePoint: ValuablePoint, evaluate: Evaluate, gui: GUI_Base):
-		self.valuablePoint = valuablePoint
-		self.evaluate = evaluate
-		self.gui = gui
-
-	def getNext(self, boardSave: BoardSave, player_me):
-		raise NotImplementedError()
+	def __init__(self, chess_self: Chess):
+		super().__init__(chess_self)
 
 	@staticmethod
-	def isAuto():
+	def is_auto():
 		return True
+
+	def get_scores(self) -> list:
+		"""
+		:return: after calling 'getNext' function,the scores in each point considered
+		"""
+		raise NotImplementedError()

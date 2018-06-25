@@ -1,47 +1,46 @@
 from unittest import TestCase
-from Helper.AI.EvaluateNormal import EvaluateNormal
-from Helper.BoardSave import BoardSave
+from Helper import *
 
 
 class TestEvaluateNormal(TestCase):
 	def test__remove(self):
-		array = [BoardSave.none, ] * 9
-		for color in (BoardSave.black, BoardSave.white):
-			other_color = BoardSave.exchangePlayer(color)
+		array = [Chess.NONE, ] * 9
+		for color in (Chess.BLACK, Chess.WHITE):
+			other_color = color.exchange()
 			for one in range(4):
 				for two in range(5, 9):
 					for front in range(0, one):
-						array[front] = BoardSave.none
+						array[front] = Chess.NONE
 					array[one] = other_color
 					for mid in range(one + 1, two):
 						array[mid] = color
 					array[two] = other_color
 					for back in range(two + 1, 9):
-						array[back] = BoardSave.none
+						array[back] = Chess.NONE
 					ret = EvaluateNormal._remove(array, other_color)
 					assert len(ret) == two - one - 1
 
 	def test_evaluate_one_direction(self):
-		array = [BoardSave.none, ] * 2 + [BoardSave.black, ] * 5 + [BoardSave.none, ] * 2
-		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == 5
+		array = [Chess.NONE, ] * 2 + [Chess.BLACK, ] * 5 + [Chess.NONE, ] * 2
+		assert EvaluateNormal._evaluate_one_direction(array, Chess.BLACK) == EvaluateNormal._scores[5]
 
-		array = [BoardSave.none, ] * 2 + [BoardSave.black, ] * 4 + [BoardSave.none, ] * 3
-		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == (4,False)
+		array = [Chess.NONE, ] * 2 + [Chess.BLACK, ] * 4 + [Chess.NONE, ] * 3
+		assert EvaluateNormal._evaluate_one_direction(array, Chess.BLACK) == EvaluateNormal._scores[(4, False)]
 
-		array = [BoardSave.none, ] * 2 + [BoardSave.black, ] * 3 + [BoardSave.none, ] * 4
-		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == (3, False)
+		array = [Chess.NONE, ] * 2 + [Chess.BLACK, ] * 3 + [Chess.NONE, ] * 4
+		assert EvaluateNormal._evaluate_one_direction(array, Chess.BLACK) == EvaluateNormal._scores[(3, False)]
 
-		array = [BoardSave.black, ] + [BoardSave.none, ] * 2 + [BoardSave.black, ] * 2 + [BoardSave.none, ] * 4
-		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == (3, True)
+		array = [Chess.BLACK, ] + [Chess.NONE, ] * 2 + [Chess.BLACK, ] * 2 + [Chess.NONE, ] * 4
+		assert EvaluateNormal._evaluate_one_direction(array, Chess.BLACK) == EvaluateNormal._scores[(3, True)]
 
-		array = [BoardSave.none, ] * 3 + [BoardSave.black, ] * 2 + [BoardSave.none, ] * 4
-		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == (2, False)
+		array = [Chess.NONE, ] * 3 + [Chess.BLACK, ] * 2 + [Chess.NONE, ] * 4
+		assert EvaluateNormal._evaluate_one_direction(array, Chess.BLACK) == EvaluateNormal._scores[(2, False)]
 
-		array = [BoardSave.black, ] + [BoardSave.none, ] * 3 + [BoardSave.black, ] + [BoardSave.none, ] * 4
-		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == (2, True)
+		array = [Chess.BLACK, ] + [Chess.NONE, ] * 3 + [Chess.BLACK, ] + [Chess.NONE, ] * 4
+		assert EvaluateNormal._evaluate_one_direction(array, Chess.BLACK) == EvaluateNormal._scores[(2, True)]
 
-		array = [BoardSave.none, ] * 4 + [BoardSave.black, ] + [BoardSave.none, ] * 4
-		assert EvaluateNormal.evaluate_one_direction(array, BoardSave.black) == 1
+		array = [Chess.NONE, ] * 4 + [Chess.BLACK, ] + [Chess.NONE, ] * 4
+		assert EvaluateNormal._evaluate_one_direction(array, Chess.BLACK) == EvaluateNormal._scores[1]
 
 	def test_getValue(self):
 		"""
@@ -70,7 +69,8 @@ class TestEvaluateNormal(TestCase):
 		| 2 2 2 2 2 2 2 2
 		:return:
 		"""
-		save = BoardSave(15, 15)
+		board_size = BoardSize(15, 15)
+		save = BoardSave(board_size)
 		s = [[
 			'21222122',
 			'22121222',
@@ -102,7 +102,7 @@ class TestEvaluateNormal(TestCase):
 				for y, char in enumerate(one):
 					if char == ' ':
 						continue
-					save.add(x, y, char == '1')
+					save.add(x, y, Chess.BLACK if char == '1' else Chess.WHITE)
 			print(save)
-			transcendental = EvaluateNormal(15, 15)
-			print(transcendental.getValue(save, 2, 3, BoardSave.black))
+			transcendental = EvaluateNormal()
+			print(transcendental.get_value(save, 2, 3, Chess.BLACK))

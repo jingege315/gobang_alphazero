@@ -1,37 +1,33 @@
-from ..BoardSave import BoardSave
+from ..Base import *
 
 
 class Player(object):
 	"""
-	the player can use the information of board and order to decide how to move in next step
+	the player playing gobang can be human or AI
 	"""
 
-	def __init__(self):
-		self.isBlack = None
+	def __init__(self, chess_self: Chess):
+		self._chess_self = chess_self
 
-	def getNext(self, boardSave: BoardSave, player_me):
+	def get_next(self, board: BoardSave) -> (int, int):
 		"""
 		the player can use the information of board and order to decide how to move in next step
-		:param boardSave:
-		:param player_me:
-		:return: 	the move about next step,return (x,y)
-					if waiting,return None
+		:param board:
+		:return:
+			return (x,y):the move about next step
+			return None:waiting for human click
 		"""
 		raise NotImplementedError()
 
 	@staticmethod
-	def isAuto():
+	def is_auto() -> bool:
 		"""
-		whether the player is auto to move
-		:return:
+		:return: whether the player is AI to auto move chess
 		"""
 		raise NotImplementedError()
 
-	def MoveFinish(self, boardSave: BoardSave):
+	def get_chess_color(self) -> Chess:
 		"""
-		after using 'getNext' function moving successfully and _move(x,y) the point getNext return ,
-		this function will be callback to draw something and so on.
-		:param boardSave:
-		:return:
+		:return: the chess's color of this player
 		"""
-		pass
+		return self._chess_self
